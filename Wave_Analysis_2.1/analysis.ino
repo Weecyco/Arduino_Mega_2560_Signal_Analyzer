@@ -59,11 +59,11 @@ void Signals::anlyLoop()
       {
         printFT(true);
       }
-      else if(in == "PSIGo")//prints current Signal w/o guides
+      else if(in == "PSIGO")//prints current Signal w/o guides
       {
         printSig(false);
       }
-      else if(in == "PFTo")//prints current FT w/o guides
+      else if(in == "PFTO")//prints current FT w/o guides
       {
         printFT(false);
       }
@@ -84,7 +84,7 @@ void Signals::anlyLoop()
         Serial.println(continuous);
         Serial.println("Time Reset");
       }
-      else if(!globalCommands(in))
+      else if(!globalCommands(in, trigger))
       {
         Serial.println("Error: cmd/arg not recog.");
       }
@@ -105,11 +105,7 @@ void Signals::anlyLoop()
       {
         
         analyzed = true;
-        unsigned long time = millis();
         analyze();
-        Serial.print("dt = ");
-        Serial.print(millis() - time);
-        Serial.println("ms");
       }
 
       //triggers a recording
@@ -185,7 +181,7 @@ void Signals::analyzeFT()
         Results[resultCount].freq[i] = baseFreq;
 
       //displays detailed information
-      if(detail)
+      if(detail > 1)
       {
         Serial.print(baseFreq);
         Serial.print("Hz (");
@@ -199,6 +195,12 @@ void Signals::analyzeFT()
         Serial.print((FT[FTmax[i]] - 0.5 * (FT[FTmax[i] + 1] + FT[FTmax[i] - 1])) / (double)FT[FTmax[i]]);
         Serial.println(")\n");
       }
+      else if(detail == 1)
+      {
+        Serial.print(Results[resultCount].freq[i]);
+        Serial.println("Hz");
+      }
+      
       if(i == 0)
         maxRef = ref;
     }
@@ -207,6 +209,7 @@ void Signals::analyzeFT()
       Serial.println("NO FREQ'S DETECTED");
     }
   }
+  
 
 //  //performs calibration if an expected frequency was given (not -1)
 //  if(expectedFreq > 0 && FTmax[0] > 0)

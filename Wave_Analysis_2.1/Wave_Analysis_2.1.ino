@@ -5,7 +5,6 @@
 #define RESULT_WARNING 370
 #define RECORD_LIMIT 10
 //Simple Frequency Analysis Program 2.1
-//by Cody Sung
 
 //Audio in with 38.5kHz sampling rate, interrupts, and clipping indicator
 //by Amanda Ghassaei
@@ -46,7 +45,7 @@ public:
 //  bool abrt; //returns to setup
   bool continuous; //holds whether or not the sending of data is continous or by prompt
 //  bool sendOnVar; //sends when signal varies significantly (ignored if continous is true)
-  bool detail; //whether or not detailed information is displayed
+  byte detail; //whether or not detailed information is displayed
   bool estimate; //whether or not to estimate the value based on its surounding frequencies
 
 //result parameters
@@ -71,7 +70,7 @@ public:
 
   void startLoop();
 
-  bool globalCommands(String&);
+  bool globalCommands(const String&, bool);
   
 private:
   void anlyLoop();
@@ -121,7 +120,7 @@ void setup() {
 
   
   //startup message
-  Serial.println("Signal Anly. tool by Cody Sung");
+  Serial.println("Signal Anly. tool, Ver 2.1");
   Serial.print(" >> ");
 
   //allocates the default size for results
@@ -195,7 +194,7 @@ void loop() {
       Serial.print("Result Length: ");
       Serial.println(Signal.resultLen);
     }
-    else if(!Signal.globalCommands(in))
+    else if(!Signal.globalCommands(in, false))
     {
       Serial.println("Error: cmd/arg not recog.");
     }

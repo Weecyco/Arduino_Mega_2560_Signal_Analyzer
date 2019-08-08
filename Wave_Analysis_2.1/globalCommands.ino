@@ -1,4 +1,4 @@
-bool Signals::globalCommands(String& in)
+bool Signals::globalCommands(const String& in, bool trigger)
 {
   if(in == "C")//togggles continuous
   {
@@ -7,9 +7,14 @@ bool Signals::globalCommands(String& in)
     Serial.println(continuous);
     return true;
   }
-  else if(in == "D")//toggles details
+  else if(in[0] == 'D')//toggles details
   {
-    detail = !detail;
+    if(in.length() > 1)
+    {
+      detail = in[1] - '0';
+      if(detail > 2)
+        detail = 2;
+    }
     Serial.print("Detail: ");
     Serial.println(detail);
     return true;
@@ -51,7 +56,11 @@ bool Signals::globalCommands(String& in)
   }
   else if(in == "CLRR")//clears results
   {
+    unsigned int tempTime = 0;
+    if(trigger)
+      tempTime = Results[resultCount].time_cs;
     clrResults();
+    Results[resultCount].time_cs = tempTime;
     Serial.println("Results Cleared");
     return true;
   }

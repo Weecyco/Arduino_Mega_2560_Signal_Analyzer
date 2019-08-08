@@ -16,7 +16,7 @@ Signals::Signals()
 //  abrt = false;
   continuous = false;
 //  sendOnVar = false;
-  detail = false;
+  detail = 1;
   estimate = true;
 
   Results = NULL;
@@ -99,19 +99,22 @@ void Signals::printResult()
 {
   for(int resCnt = 0; resCnt < resultLen; ++resCnt)
   {
-    Serial.print(resCnt);
-    Serial.print(": ");
-    Serial.print("Freq's: ");
-    for(int freqCnt = 0; freqCnt < freqCount; ++freqCnt)
+    if(Results[(resCnt+resultCount+1)%resultLen].time_cs != 0)
     {
-      Serial.print(Results[(resCnt+resultCount)%resultLen].freq[freqCnt]);
-      Serial.print("(");
-      Serial.print(Results[(resCnt+resultCount)%resultLen].mag[freqCnt]);
-      Serial.print(")  ");
+      Serial.print("At: ");
+      Serial.print(Results[(resCnt+resultCount)%resultLen].time_cs/100.0);
+      Serial.print("s  ");
+      
+      Serial.print("Freq's: ");
+      for(int freqCnt = 0; freqCnt < freqCount; ++freqCnt)
+      {
+        Serial.print(Results[(resCnt+resultCount)%resultLen].freq[freqCnt]);
+        Serial.print("(");
+        Serial.print(Results[(resCnt+resultCount)%resultLen].mag[freqCnt]);
+        Serial.print(")  ");
+      }
+      Serial.print("\n");
     }
-    Serial.print("At: ");
-    Serial.print(Results[(resCnt+resultCount)%resultLen].time_cs/100.0);
-    Serial.println("s");
   }
 }
 
