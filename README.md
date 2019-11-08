@@ -1,6 +1,7 @@
 # Arduino_Mega_2560_Signal_Analyzer
 
  --- Mega2560 Signal Analyzer Version 2.1 --- 
+ ------------
 
 This is a simple program that repeatedly extracts the an analog signal and finds its strongest frequencies. This version only supports the largest 2 frequencies.
 Due to the fixed point multiplication and memory limitations the minimum detectable amplitude is 0.2V.
@@ -8,22 +9,27 @@ The higher the amplitude of the signal, the more consistant and precise the anal
 
 
  -- Defaults -- 
+ 
   analog input = 0
-
+  
   recording length = 1024
+  
   result length = 150
 
   reference level = 127
 
   continuous = false
+  
   detail = 1
+  
   estimate = true
 
 -- Commands (non-case sensitive) --
+-----------------------------------
+
 T - Top Menu only
 A - During Analysis only
 G - Global
------------------------------------
 
 S<#>: 	Starts analysis
 	(optional) sets analog input to # (T)
@@ -59,12 +65,15 @@ REF<#>:	Displays reference level,
 	(optional) Sets the reference level to # or to the current detected analog input if # = 'D' (G)
 
 
+
 PSIG: 	Prints analog signal (A)
+
 PSIGO:	Prints analog signal without time (A)
+
 PFT:	Prints Fourier Transform (A)
+
 PFTO:	Prints Fourier Transform without time (A)
+
 PR: 	Prints results(G)
-
-
 
 
